@@ -38,7 +38,19 @@ module.exports = (function () {
     });
 
     externalRoutes.get(`${apiPrefix}/user/:id`, (req, res) => {
-        console.log(req.params)
+        console.log(req.params.id)
+
+        let sqlQuery = `SELECT * FROM users Where id = ${req.params.id}`;
+        sequelize.query(
+            sqlQuery,
+            {
+                type: sequelize.QueryTypes.SELECT
+            }
+        ).then(result => {
+            res.send(apiResponse(result));
+        }).catch((error) => {
+            if (error) throw err;
+        });
 
     });
 
@@ -47,7 +59,12 @@ module.exports = (function () {
     });
 
     function apiResponse(results) {
-        return JSON.stringify({ "status": 200, "error": null, "response": results });
+
+        if (results.length > 0) {
+            return JSON.stringify({ "status": 200, "error": null, "response": results });
+        } else {
+            return JSON.stringify({ "status": 200, "error": null, "response": "No Data Found" });
+        }
     }
 
     return externalRoutes;
