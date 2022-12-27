@@ -1,36 +1,40 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //Admin
-import AdminLayout from "./pages/admin/layout/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
+import Dashboard from "./pages/Dashboard";
 
 //Guest
-import GuestLayout from "./pages/guest/layout/GuestLayout";
+import Layout from "./pages/layout/Layout";
 
-import Home from "./pages/guest/Home";
-import AboutUs from "./pages/guest/AboutUs";
-import ContactUs from "./pages/guest/ContactUs";
+import Home from "./pages/Home";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 import NoPageFound from "./pages/NoPageFound";
 import './App.css';
+import ProtectedLayout from "./pages/layout/ProtectedLayout";
+import { useState } from "react";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
 
 function App() {
-  
-
+  const [user, setUser] = useState(localStorage.getItem('auth'));
+  // console.log(user);
 
   return (
-    <BrowserRouter>
     <Routes>     
-      <Route path="/dashboard" element={<AdminLayout />}>
-        <Route exact index element={<Dashboard />} />
-      </Route>
-      <Route path="/" element={<GuestLayout />}>
+      <Route path="/" element={<Layout isAllowed={user} isAdminPage={false} />}>
         <Route index element={<Home />} />
         <Route exact path="about" element={<AboutUs />} />
         <Route exact path="contact" element={<ContactUs />} />
-        <Route exact path="*" element={<NoPageFound />} />
+        <Route exact path="login" element={<Login />} />
+        <Route exact path="register" element={<Register />} />
+        <Route exact path="*" element={<NoPageFound />} />       
+      </Route>
+      <Route path="/dashboard" element={<ProtectedLayout isAllowed={user} isAdminPage={true}  />}>
+        <Route exact index element={<Dashboard />} />
       </Route>
     </Routes>
-  </BrowserRouter>
   );
 }
 

@@ -8,6 +8,15 @@
   cursor: pointer;
 }
 
+.Icon-nav {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
 .Icon span {
   display: block;
   position: absolute;
@@ -21,24 +30,55 @@
   transition: .2s ease-in-out;
 }
 
+.Icon-nav span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  height: 4px;
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  transform: rotate(0deg);
+  transition: .2s ease-in-out;
+}
+
 .Icon span:nth-child(1),
 .Icon span:nth-child(3) {
   width: 50%;
   transform: rotate(45deg);
 }
 
+.Icon-nav span:nth-child(1),
+.Icon-nav span:nth-child(3) {
+  transform: rotate(0);
+}
+
+
 .Icon span:nth-child(1) {
   left: 3px;
   top: 15px;
+}
+
+.Icon-nav span:nth-child(1) {
+  top: 12px;
 }
 
 .Icon span:nth-child(2) {
   transform: rotate(-45deg);
 }
 
+.Icon-nav span:nth-child(2) {
+  transform: rotate(0);
+}
+
 .Icon span:nth-child(3) {
   left: 20px;
   top: 31px;
+}
+
+.Icon-nav span:nth-child(3) {
+  top: 20px;
 }
 
 .Icon.open span:nth-child(1),
@@ -60,3 +100,12 @@
   transform: rotate(45deg);
 }
 /*close btn css*/
+
+/* Dashboard */
+  .dash-content div{
+    transition: 0.5s ease-in-out; 
+  }
+  .btn-cs-btn svg{
+    filter: brightness(0) invert(1);
+  }
+/* Dashboard End*/
