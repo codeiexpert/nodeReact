@@ -4,14 +4,16 @@ module.exports = (function () {
     const Sequelize = require("sequelize");
     const externalRoutes = require('express').Router();
     const apiPrefix = '/api/v1';
-    const sequelize = new Sequelize('node_restapi', 'root', '123@#abc', {
+    const sequelize = new Sequelize(
+        'selling_partner', 
+        'root', '', {
         host: 'localhost',
         dialect: 'mysql',
-        dialectOptions: {
-            socketPath: '/var/run/mysqld/mysqld.sock',
-            supportBigNumbers: true,
-            bigNumberStrings: true
-        },
+        // dialectOptions: {
+        //     socketPath: '/var/run/mysqld/mysqld.sock',
+        //     supportBigNumbers: true,
+        //     bigNumberStrings: true
+        // },
     });
 
     sequelize.authenticate().then(() => {
@@ -23,8 +25,23 @@ module.exports = (function () {
 
 
 
-    externalRoutes.get(`${apiPrefix}/users`, (req, res) => {
-        let sqlQuery = "SELECT * FROM users";
+    externalRoutes.get(`${apiPrefix}/login`, (req, res) => {
+        apiResponse(true);
+        // let sqlQuery = `SELECT * FROM roles Where name="Administrator"`;
+        // sequelize.query(
+        //     sqlQuery,
+        //     {
+        //         type: sequelize.QueryTypes.SELECT
+        //     }
+        // ).then(result => {
+        //     res.send(apiResponse(result));
+        // }).catch((error) => {
+        //     if (error) throw err;
+        // });
+    });
+
+    externalRoutes.post(`${apiPrefix}/register`, (req, res) => {
+        let sqlQuery = "SELECT * FROM roles";
         sequelize.query(
             sqlQuery,
             {
@@ -37,10 +54,10 @@ module.exports = (function () {
         });
     });
 
-    externalRoutes.get(`${apiPrefix}/user/:id`, (req, res) => {
+    externalRoutes.get(`${apiPrefix}/role/:id`, (req, res) => {
         console.log(req.params.id)
 
-        let sqlQuery = `SELECT * FROM users Where id = ${req.params.id}`;
+        let sqlQuery = `SELECT * FROM roles Where id = ${req.params.id}`;
         sequelize.query(
             sqlQuery,
             {
@@ -52,18 +69,14 @@ module.exports = (function () {
             if (error) throw err;
         });
 
-    });
-
-    externalRoutes.get('*', function (req, res) {
-        res.status(404).send(apiResponse('Page Not Found'));
     });
 
     function apiResponse(results) {
 
         if (results.length > 0) {
-            return JSON.stringify({ "status": 200, "error": null, "response": results });
+            return JSON.stringify({ "status": 200, "success": true, "response": results });
         } else {
-            return JSON.stringify({ "status": 200, "error": null, "response": "No Data Found" });
+            return JSON.stringify({ "status": 200, "error": true, "response": "No Data Found" });
         }
     }
 

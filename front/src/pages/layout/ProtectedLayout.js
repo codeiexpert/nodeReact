@@ -6,7 +6,9 @@ import Footer from "./Footer";
 
 const ProtectedLayout = ({ isAllowed, isAdminPage=false,  redirectPath = '/' }) => {
     // console.log(isAllowed);
-  
+    if(!isAllowed || isAllowed === 'false'){
+        return <Navigate to="/" />;
+    }
     return <>
         <Header isAllowed={isAllowed} isAdminPage={isAdminPage}/>   
              <Outlet isAllowed={isAllowed}/>

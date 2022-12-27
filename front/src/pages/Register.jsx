@@ -8,8 +8,7 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBInput,
-  MDBIcon,
-  MDBCheckbox
+  MDBIcon
 }
 from 'mdb-react-ui-kit';
 

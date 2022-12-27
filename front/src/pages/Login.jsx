@@ -11,17 +11,37 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
 // import { Button } from 'bootstrap';
 
+
+
+const fortmatResponse = (res) => {
+  console.log(JSON.stringify(res, null, 2));
+  return JSON.stringify(res, null, 2);
+};
+
 const Login = ({isAllowed}) => {
   const navigate = useNavigate();
-  const handleLogin = () =>
+  const handleLogin = async () =>
   {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ title: 'React POST Request Example' })
+  // };
+    fetch("http://localhost:3001/api/v1/login")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
       localStorage.setItem('auth', true); 
-      isAllowed = true;
-      console.log(true);
-      navigate(0);
-      // Similar to componentDidMount and componentDidUpdate:
-      
+      navigate('/dashboard');
+    })
+    .catch(err => console.log(fortmatResponse(err) || err))
+    
   }
+
+  //API
+
+  
+
   return (
     <MDBContainer fluid className="p-3 my-5">
 
